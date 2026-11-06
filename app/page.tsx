@@ -1,69 +1,98 @@
-import Image from "next/image";
+import { projects } from '@/data/projects';
+import { HeroSection } from '@/components/HeroSection';
+import { ProjectRow } from '@/components/ProjectRow';
+import { StackSection } from '@/components/StackSection';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="w-full">
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* Selected Work Section */}
+      <section id="work" className="py-20 border-t border-line scroll-mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+          <div className="mb-12">
+            <h2 className="font-serif text-4xl sm:text-5xl text-ink font-normal">
+              Selected Work
+            </h2>
+          </div>
+
+          <div className="space-y-2">
+            {projects.map((project) => (
+              <ProjectRow key={project.slug} project={project} />
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Stack Section */}
+      <StackSection />
+
+      {/* About Section */}
+      <section id="about" className="py-20 border-t border-line scroll-mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-20">
+            <div className="lg:w-1/3">
+              <h2 className="font-serif text-4xl sm:text-5xl text-ink font-normal">
+                About
+              </h2>
+            </div>
+            <div className="lg:w-2/3">
+              <p className="text-ink text-lg sm:text-xl leading-relaxed max-w-[65ch]">
+                I am a Junior Full Stack Developer based in Chennai. I completed my B.E. in Computer Science and Engineering at Saveetha School of Engineering (2022-2026). Since April 2026 I have worked at VianaSoft Private Limited on VStay, where I develop and maintain the web and mobile application, handle its AWS deployment, and manage its releases on Google Play and the Apple App Store. Before that I was a Full Stack Web Developer intern at Smart Learned Tech (June to August 2025). I speak English, Telugu and Hindi.
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-24 border-t border-line scroll-mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+          <div className="mb-10">
+            <h2 className="font-serif text-4xl sm:text-5xl text-ink font-normal">
+              Contact
+            </h2>
+          </div>
+
+          <div className="my-10">
+            <a
+              href="mailto:dasettisribalu@gmail.com"
+              className="font-serif text-[clamp(1.75rem,5.5vw,4.5rem)] leading-tight text-ink underline decoration-accent decoration-2 sm:decoration-4 underline-offset-8 break-all sm:break-normal block"
+            >
+              dasettisribalu@gmail.com
+            </a>
+          </div>
+
+          <div className="pt-8 border-t border-line flex flex-wrap items-center gap-x-8 gap-y-4 text-base">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-accent dark:hover:text-accent transition-colors duration-200"
+            >
+              Resume (PDF)
+            </a>
+            <a
+              href="https://github.com/Balaji431"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-accent dark:hover:text-accent transition-colors duration-200"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/balaji-d-1675a9324"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-accent dark:hover:text-accent transition-colors duration-200"
+            >
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

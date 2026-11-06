@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# logs
+*.log
+
+# working files & audits
+lighthouse-*.report.html
+lighthouse-*.report.json
+/screenshots/
+verification-report*
+Balaji_Dasetti_Resume_Updated_2026.pdf
+
+# scripts (keep only the OG card template)
+scripts/*
+!scripts/og-template.html
