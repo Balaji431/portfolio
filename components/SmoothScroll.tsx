@@ -11,8 +11,12 @@ export function SmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Respect prefers-reduced-motion: do not initialize Lenis
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Respect prefers-reduced-motion and touch/mobile devices: do not initialize Lenis
+    if (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      window.innerWidth < 768 ||
+      (typeof window !== 'undefined' && 'ontouchstart' in window && window.innerWidth < 1024)
+    ) {
       return;
     }
 

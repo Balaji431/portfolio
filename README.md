@@ -103,5 +103,11 @@ Configured in [`app/fonts.ts`](file:///c:/portfolio/app/fonts.ts) via `next/font
 
 ---
 
-## 6. Pre-Launch Replacements
+## 6. Profile Photo & Hero Loop
+- **Photo**: Place a square image at `public/me.webp` (1:1 aspect ratio, e.g. 800×800px, under 150 KB, face centered).
+- **Loop**: Clicking your name reveals the photo in an aperture iris and moves it smoothly across 6 stops in an infinite loop inside the hero travel box (with pause controls and keyboard navigation).
+
+---
+
+## 7. Pre-Launch Replacements
 Please review [`TODO.md`](file:///c:/portfolio/TODO.md) for the complete prioritized list of replacements before public launch (removing placeholder projects, adding real contact links, updating resume, and removing `noindex`).

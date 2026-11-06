@@ -54,6 +54,7 @@ export function ProjectRow({ project }: ProjectRowProps) {
 
       <Link
         href={`/work/${project.slug}`}
+        prefetch={false}
         className="block focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4"
       >
         <div className="flex flex-col lg:flex-row lg:items-baseline justify-between gap-4">

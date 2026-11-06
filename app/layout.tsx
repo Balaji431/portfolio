@@ -83,7 +83,7 @@ export default function RootLayout({
                     document.documentElement.classList.add('js-motion-ready');
                     window.__heroSafetyTimer = setTimeout(function() {
                       document.documentElement.classList.remove('js-motion-ready');
-                    }, 2500);
+                    }, 5000);
                   }
                 } catch (e) {}
               })();

@@ -44,9 +44,9 @@ next-env.d.ts
 *.log
 
 # working files & audits
-lighthouse-*.report.html
-lighthouse-*.report.json
+lighthouse*
 /screenshots/
+/walkthrough/
 verification-report*
 Balaji_Dasetti_Resume_Updated_2026.pdf
 
