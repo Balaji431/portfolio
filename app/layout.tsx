@@ -21,10 +21,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://balajidasetti.space',
   },
-  // TODO: Remove noindex and nofollow before public production launch
+  authors: [{ name: 'Balaji Dasetti', url: 'https://balajidasetti.space' }],
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   openGraph: {
     title: 'Balaji Dasetti, Full Stack Developer',
@@ -36,9 +43,10 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://balajidasetti.space/og-image.png',
         width: 1200,
         height: 630,
+        type: 'image/png',
         alt: 'Balaji Dasetti, Full Stack Developer',
       },
     ],
@@ -48,7 +56,7 @@ export const metadata: Metadata = {
     title: 'Balaji Dasetti, Full Stack Developer',
     description:
       'Junior Full Stack Developer based in Chennai, India. Flutter, PHP 8.2, MySQL.',
-    images: ['/og-image.png'],
+    images: ['https://balajidasetti.space/og-image.png'],
   },
 };
 

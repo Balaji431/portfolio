@@ -29,6 +29,32 @@ export async function generateMetadata({
   return {
     title: `${project.title} — Balaji Dasetti`,
     description: project.summary,
+    alternates: {
+      canonical: `https://balajidasetti.space/work/${project.slug}`,
+    },
+    openGraph: {
+      title: `${project.title} — Balaji Dasetti`,
+      description: project.summary,
+      url: `https://balajidasetti.space/work/${project.slug}`,
+      siteName: 'Balaji Dasetti Portfolio',
+      locale: 'en_US',
+      type: 'article',
+      images: [
+        {
+          url: 'https://balajidasetti.space/og-image.png',
+          width: 1200,
+          height: 630,
+          type: 'image/png',
+          alt: `${project.title} — Balaji Dasetti`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} — Balaji Dasetti`,
+      description: project.summary,
+      images: ['https://balajidasetti.space/og-image.png'],
+    },
   };
 }
 
