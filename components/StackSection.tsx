@@ -20,8 +20,8 @@ const stackGroups: StackGroup[] = [
 
 export function StackSection() {
   return (
-    <section id="stack" className="py-20 border-t border-line scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+    <section id="stack" className="relative overflow-hidden py-20 border-t border-line scroll-mt-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
         <div className="mb-12">
           <h2 className="font-serif text-4xl sm:text-5xl text-ink font-normal">
             Stack

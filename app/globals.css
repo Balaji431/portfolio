@@ -2,20 +2,54 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+  Botanical Editorial Palette (Strict 6-Color System + Dark Olive Text Exception):
+  - Butter Yellow:     #F4E8A8 (highlights, hover accents)
+  - Warm Cream:        #E8DCC6 (soft surfaces, subtle shading)
+  - Soft Greige:       #C4BBA8 (dividers / hairlines, soft shadows)
+  - Muted Taupe:       #A99A7E (borders, secondary decorative detail)
+  - Ivory White:       #F7F4EC (page base background)
+  - Muted Olive Green: #52613A (links, accents, muted text)
+  - Dark Olive Text:   #2E3820 (headings & body text contrast exception)
+*/
 :root {
-  --bg: #F4EFE6;
-  --ink: #1A1A1A;
-  --mute: #6B645A;
-  --line: #D9D1C2;
-  --accent: #E8542A;
+  color-scheme: dark;
+  --butter: #F4E8A8;
+  --cream: #E8DCC6;
+  --greige: #C4BBA8;
+  --taupe: #A99A7E;
+  --ivory: #F7F4EC;
+  --olive: #52613A;
+  --ink-olive: #2E3820;
+
+  --bg: #F7F4EC;
+  --ink: #2E3820;
+  --mute: #52613A;
+  --line: #C4BBA8;
+  --accent: #52613A;
+  --highlight: #F4E8A8;
+}
+
+html:not(.dark) {
+  color-scheme: light;
 }
 
 .dark {
-  --bg: #1A1713;
-  --ink: #EFE8DA;
-  --mute: #A39A8A;
-  --line: #3A342B;
-  --accent: #FF7A4D;
+  color-scheme: dark;
+  --butter: #F4E8A8;
+  --cream: #E8DCC6;
+  --greige: #C4BBA8;
+  --taupe: #A99A7E;
+  --ivory: #F7F4EC;
+  --olive: #52613A;
+  --ink-olive: #2E3820;
+
+  --bg: #22291A;
+  --ink: #F7F4EC;
+  --mute: #E8DCC6;
+  --line: #52613A;
+  --accent: #F4E8A8;
+  --highlight: #52613A;
 }
 
 @theme {
@@ -24,6 +58,13 @@
   --color-mute: var(--mute);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-butter: var(--butter);
+  --color-cream: var(--cream);
+  --color-greige: var(--greige);
+  --color-taupe: var(--taupe);
+  --color-ivory: var(--ivory);
+  --color-olive: var(--olive);
+  --color-ink-olive: var(--ink-olive);
 
   --font-serif: var(--font-serif), Georgia, Cambria, serif;
   --font-sans: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -53,27 +94,35 @@
   }
 
   ::selection {
-    background-color: var(--accent);
-    color: var(--bg);
+    background-color: var(--butter);
+    color: var(--ink-olive);
   }
 
+  /* Visible keyboard focus: 2px Muted Olive outline with a Butter Yellow offset ring */
   :focus {
-    outline: 2px solid var(--accent) !important;
+    outline: 2px solid #52613A !important;
     outline-offset: 3px !important;
+    box-shadow: 0 0 0 3px #F4E8A8 !important;
   }
 
   :focus:not(:focus-visible) {
     outline: none !important;
+    box-shadow: none !important;
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent) !important;
+    outline: 2px solid #52613A !important;
     outline-offset: 3px !important;
+    box-shadow: 0 0 0 3px #F4E8A8 !important;
   }
 
-  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
-    outline: 2px solid var(--accent) !important;
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid #52613A !important;
     outline-offset: 3px !important;
+    box-shadow: 0 0 0 3px #F4E8A8 !important;
   }
 }
 
@@ -113,5 +162,87 @@ html.js-motion-ready .hero-intro {
   .hero-intro {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* Project Row Dynamic Highlight (Muted Olive accent + Butter Yellow underline/highlight) */
+.project-row {
+  position: relative;
+  border-top: 1px solid var(--line);
+}
+
+.project-row::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent);
+  box-shadow: 0 2px 0 0 var(--butter);
+  pointer-events: none;
+  z-index: 10;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s ease;
+}
+
+.project-row .project-title,
+.project-row .project-action {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: color 250ms ease, text-decoration-color 250ms ease, background-color 250ms ease;
+}
+
+/* Hover: only for devices with hover and fine pointer (never touch) */
+@media (hover: hover) and (pointer: fine) {
+  .project-row:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-row:hover .project-title,
+  .project-row:hover .project-action {
+    color: var(--accent);
+    text-decoration-color: var(--butter);
+  }
+}
+
+/* Keyboard: focus-visible on the row link */
+.project-row:has(:focus-visible)::before {
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-row:has(:focus-visible) .project-title,
+.project-row:has(:focus-visible) .project-action {
+  color: var(--accent);
+  text-decoration-color: var(--butter);
+}
+
+/* Touch and pen (:active) while pressed */
+.project-row:active::before {
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-row:active .project-title,
+.project-row:active .project-action {
+  color: var(--accent);
+  text-decoration-color: var(--butter);
+}
+
+/* prefers-reduced-motion: instant switch, no transitions */
+@media (prefers-reduced-motion: reduce) {
+  .project-row::before,
+  .project-row .project-title,
+  .project-row .project-action {
+    transition: none !important;
   }
 }

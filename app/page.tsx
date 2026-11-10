@@ -10,8 +10,8 @@ export default function HomePage() {
       <HeroSection />
 
       {/* Selected Work Section */}
-      <section id="work" className="py-20 border-t border-line scroll-mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+      <section id="work" className="relative overflow-hidden py-20 border-t border-line scroll-mt-16">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
           <div className="mb-12">
             <h2 className="font-serif text-4xl sm:text-5xl text-ink font-normal">
               Selected Work
@@ -30,8 +30,8 @@ export default function HomePage() {
       <StackSection />
 
       {/* About Section */}
-      <section id="about" className="py-20 border-t border-line scroll-mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+      <section id="about" className="relative overflow-hidden py-20 border-t border-line scroll-mt-16">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-20">
             <div className="lg:w-1/3">
               <h2 className="font-serif text-4xl sm:text-5xl text-ink font-normal">
@@ -48,8 +48,8 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 border-t border-line scroll-mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+      <section id="contact" className="relative overflow-hidden py-24 border-t border-line scroll-mt-16">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
           <div className="mb-10">
             <h2 className="font-serif text-4xl sm:text-5xl text-ink font-normal">
               Contact
@@ -59,7 +59,7 @@ export default function HomePage() {
           <div className="my-10">
             <a
               href="mailto:dasettisribalu@gmail.com"
-              className="font-serif text-[clamp(1.75rem,5.5vw,4.5rem)] leading-tight text-ink underline decoration-accent decoration-2 sm:decoration-4 underline-offset-8 break-all sm:break-normal block"
+              className="font-serif text-[clamp(1.75rem,5.5vw,4.5rem)] leading-tight text-ink underline decoration-accent hover:decoration-butter decoration-2 sm:decoration-4 underline-offset-8 break-all sm:break-normal block w-fit"
             >
               dasettisribalu@gmail.com
             </a>
@@ -70,7 +70,7 @@ export default function HomePage() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-accent dark:hover:text-accent transition-colors duration-200"
+              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-butter hover:text-accent transition-colors duration-200"
             >
               Resume (PDF)
             </a>
@@ -78,7 +78,7 @@ export default function HomePage() {
               href="https://github.com/Balaji431"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-accent dark:hover:text-accent transition-colors duration-200"
+              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-butter hover:text-accent transition-colors duration-200"
             >
               GitHub
             </a>
@@ -86,7 +86,7 @@ export default function HomePage() {
               href="https://www.linkedin.com/in/balaji-d-1675a9324"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-accent dark:hover:text-accent transition-colors duration-200"
+              className="text-ink border-b border-accent pb-0.5 hover:underline decoration-butter hover:text-accent transition-colors duration-200"
             >
               LinkedIn
             </a>

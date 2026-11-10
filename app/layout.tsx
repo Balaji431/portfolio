@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { SkipToContent } from '@/components/SkipToContent';
 import { SmoothScroll } from '@/components/SmoothScroll';
 import { CustomCursor } from '@/components/CustomCursor';
+import { PlexusBackground } from '@/components/PlexusBackground';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -60,22 +61,31 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
+      className={`dark ${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#1A1713" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  var stored = localStorage.getItem('portfolio-theme');
-                  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  var isDark = stored === 'dark' || (!stored && prefersDark);
-                  if (isDark) {
-                    document.documentElement.classList.add('dark');
-                  } else {
+                  var stored = null;
+                  try {
+                    stored = localStorage.getItem('portfolio-theme');
+                  } catch (err) {
+                    stored = null;
+                  }
+                  var isLight = stored === 'light';
+                  if (isLight) {
                     document.documentElement.classList.remove('dark');
+                    var meta = document.querySelector('meta[name="theme-color"]');
+                    if (meta) meta.setAttribute('content', '#F7F4EC');
+                  } else {
+                    document.documentElement.classList.add('dark');
+                    var meta = document.querySelector('meta[name="theme-color"]');
+                    if (meta) meta.setAttribute('content', '#1A1713');
                   }
 
                   var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -85,7 +95,9 @@ export default function RootLayout({
                       document.documentElement.classList.remove('js-motion-ready');
                     }, 5000);
                   }
-                } catch (e) {}
+                } catch (e) {
+                  document.documentElement.classList.add('dark');
+                }
               })();
             `,
           }}
@@ -97,12 +109,13 @@ export default function RootLayout({
           `}</style>
         </noscript>
       </head>
-      <body className="font-sans bg-bg text-ink min-h-screen flex flex-col selection:bg-accent selection:text-bg">
+      <body className="font-sans bg-bg text-ink min-h-screen flex flex-col selection:bg-butter selection:text-ink-olive">
+        <PlexusBackground />
         <SmoothScroll />
         <CustomCursor />
         <SkipToContent />
         <Header />
-        <main id="main-content" className="flex-1">
+        <main id="main-content" className="flex-1 relative z-10">
           {children}
         </main>
         <Footer />

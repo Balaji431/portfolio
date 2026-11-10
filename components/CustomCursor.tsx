@@ -10,7 +10,10 @@ export function CustomCursor() {
 
   useEffect(() => {
     // Only enable on desktop / devices with fine pointer (no touch devices)
-    if (!window.matchMedia('(pointer: fine)').matches) {
+    if (
+      !window.matchMedia('(pointer: fine)').matches ||
+      (typeof navigator !== 'undefined' && /Mobile|Android|iPhone/i.test(navigator.userAgent))
+    ) {
       return;
     }
     // Respect prefers-reduced-motion

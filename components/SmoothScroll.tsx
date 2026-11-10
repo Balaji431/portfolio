@@ -2,9 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type Lenis from 'lenis';
 
 export function SmoothScroll() {
   const pathname = usePathname();
@@ -15,40 +13,61 @@ export function SmoothScroll() {
     if (
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
       window.innerWidth < 768 ||
+      (typeof navigator !== 'undefined' && /Mobile|Android|iPhone/i.test(navigator.userAgent)) ||
       (typeof window !== 'undefined' && 'ontouchstart' in window && window.innerWidth < 1024)
     ) {
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
+    let isDestroyed = false;
+    let cleanupFn: (() => void) | undefined;
 
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
+    Promise.all([
+      import('lenis'),
+      import('gsap'),
+      import('gsap/ScrollTrigger'),
+    ]).then(([lenisMod, gsapMod, scrollTriggerMod]) => {
+      if (isDestroyed) return;
+
+      const LenisClass = lenisMod.default;
+      const gsap = gsapMod.default;
+      const ScrollTrigger = scrollTriggerMod.ScrollTrigger;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const lenis = new LenisClass({
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+      });
+
+      lenisRef.current = lenis;
+      (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
+      // Connect Lenis to ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
+
+      // Connect Lenis to GSAP ticker
+      const updateTicker = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+
+      gsap.ticker.add(updateTicker);
+      gsap.ticker.lagSmoothing(0);
+
+      cleanupFn = () => {
+        gsap.ticker.remove(updateTicker);
+        lenis.destroy();
+        lenisRef.current = null;
+        delete (window as unknown as { __lenis?: Lenis }).__lenis;
+      };
     });
 
-    lenisRef.current = lenis;
-    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
-
-    // Connect Lenis to ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-
-    // Connect Lenis to GSAP ticker
-    const updateTicker = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
-
     return () => {
-      gsap.ticker.remove(updateTicker);
-      lenis.destroy();
-      lenisRef.current = null;
-      delete (window as unknown as { __lenis?: Lenis }).__lenis;
+      isDestroyed = true;
+      if (cleanupFn) cleanupFn();
     };
   }, []);
 

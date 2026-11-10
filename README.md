@@ -63,7 +63,7 @@ Colors are defined in [`app/globals.css`](file:///c:/portfolio/app/globals.css) 
   --ink: #1A1A1A;      /* Primary text */
   --mute: #6B645A;     /* Secondary text */
   --line: #D9D1C2;     /* Hairline borders */
-  --accent: #E8542A;   /* Editorial terracotta */
+  --accent: #1F3A8A;   /* Deep royal indigo */
 }
 
 .dark {
@@ -71,7 +71,7 @@ Colors are defined in [`app/globals.css`](file:///c:/portfolio/app/globals.css) 
   --ink: #EFE8DA;      /* Cream text */
   --mute: #A39A8A;     /* Muted cream */
   --line: #3A342B;     /* Dark border */
-  --accent: #FF7A4D;   /* Vibrant terracotta */
+  --accent: #8FB0FF;   /* Soft luminous blue */
 }
 ```
 

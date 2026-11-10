@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 interface BoxDimensions {
   width: number;
@@ -254,8 +253,6 @@ export function HeroSection() {
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     const ctx = gsap.context(() => {
       // Hero reveal animation is active: cancel fallback preload timer
       if (fallbackPreloadTimerRef.current) {
@@ -273,10 +270,17 @@ export function HeroSection() {
         },
       });
 
-      const isMobile = window.innerWidth < 768;
-      const lineDuration = isMobile ? 0.6 : 1.0;
-      const staggerTime = isMobile ? 0.05 : 0.1;
-      const introDuration = isMobile ? 0.5 : 0.7;
+      const isMobile = window.innerWidth < 768 || (typeof navigator !== 'undefined' && /Mobile|Android|iPhone/i.test(navigator.userAgent));
+      if (isMobile) {
+        document.documentElement.classList.remove('js-motion-ready');
+        gsap.set(['.hero-line', '.hero-intro'], { clearProps: 'all' });
+        preloadPhoto();
+        return;
+      }
+
+      const lineDuration = 1.0;
+      const staggerTime = 0.1;
+      const introDuration = 0.7;
 
       tl.to('.hero-line', {
         yPercent: 0,
@@ -292,7 +296,7 @@ export function HeroSection() {
           duration: introDuration,
           clearProps: 'opacity,transform',
         },
-        isMobile ? '-=0.2' : '-=0.3'
+        '-=0.3'
       );
     }, heroRef);
 
@@ -524,7 +528,6 @@ export function HeroSection() {
       if (isMobile && travelBoxRef.current) {
         travelBoxRef.current.style.height = '280px';
       }
-      ScrollTrigger.refresh();
 
       ignoreHoverUntilRef.current = Date.now() + 800;
       isPointerOverRef.current = false;
@@ -551,7 +554,6 @@ export function HeroSection() {
           if (circleRef.current) {
             gsap.set(circleRef.current, { clearProps: 'clipPath' });
           }
-          ScrollTrigger.refresh();
 
           ignoreHoverUntilRef.current = Date.now() + 800;
           isPointerOverRef.current = false;
@@ -636,7 +638,6 @@ export function HeroSection() {
       if (isMobile && travelBoxRef.current) {
         travelBoxRef.current.style.height = '';
       }
-      ScrollTrigger.refresh();
       nameButtonRef.current?.focus();
       return;
     }
@@ -654,7 +655,6 @@ export function HeroSection() {
           if (isMobile && travelBoxRef.current) {
             travelBoxRef.current.style.height = '';
           }
-          ScrollTrigger.refresh();
           nameButtonRef.current?.focus();
         },
       });
@@ -759,9 +759,9 @@ export function HeroSection() {
   return (
     <section
       ref={heroRef}
-      className="relative pt-20 sm:pt-24 md:pt-28 pb-20 sm:pb-28 max-w-7xl mx-auto px-4 sm:px-6 md:px-10"
+      className="relative overflow-hidden pt-20 sm:pt-24 md:pt-28 pb-20 sm:pb-28 max-w-7xl mx-auto px-4 sm:px-6 md:px-10"
     >
-      <div className="flex flex-col relative">
+      <div className="flex flex-col relative z-10">
         {/* Click hint (sentence case, JetBrains Mono, muted, dismissed permanently after first open) */}
         {showHint && (
           <p className="font-mono text-xs text-mute mb-2 select-none">
@@ -852,14 +852,14 @@ export function HeroSection() {
                 id="hero-photo-circle"
                 ref={circleRef}
                 style={{ width: `${boxDimensionsRef.current.d}px`, height: `${boxDimensionsRef.current.d}px` }}
-                className="aspect-square rounded-full border border-line bg-white relative overflow-hidden"
+                className="aspect-square rounded-full border border-line bg-bg relative overflow-hidden"
               >
                 <div
                   ref={imageInnerRef}
                   className="w-full h-full rounded-full overflow-hidden will-change-transform"
                 >
                   {hasImageError ? (
-                    <div className="w-full h-full rounded-full border border-line bg-white flex items-center justify-center text-mute text-xs font-mono">
+                    <div className="w-full h-full rounded-full border border-line bg-bg flex items-center justify-center text-mute text-xs font-mono">
                       Photo placeholder
                     </div>
                   ) : (
